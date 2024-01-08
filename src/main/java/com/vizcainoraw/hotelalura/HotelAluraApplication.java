@@ -1,4 +1,4 @@
-package com.hotelalura.hotelalura;
+package com.vizcainoraw.hotelalura;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
