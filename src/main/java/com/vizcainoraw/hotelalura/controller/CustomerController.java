@@ -3,6 +3,7 @@ package com.vizcainoraw.hotelalura.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -39,10 +40,11 @@ public class CustomerController {
         }
     }
 
-    @PostMapping("customer")
-    public ResponseEntity<Customer> addCustomer(@RequestBody Customer customer) {
-        Customer _customer = service.create(customer);
-        return new ResponseEntity<>(_customer, HttpStatus.CREATED);
+    @PostMapping("/customer")
+    public ResponseEntity<CustomerDto> addCustomer(@RequestBody @Validated Customer customer) {
+        return ResponseEntity.ok(
+            service.create(customer)
+        );
     }
 
     @PutMapping("customer/{id}")

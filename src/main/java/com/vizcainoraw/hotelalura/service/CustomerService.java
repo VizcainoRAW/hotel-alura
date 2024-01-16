@@ -31,8 +31,10 @@ public class CustomerService{
                        .collect(Collectors.toList());
     }
     
-    public Customer create(Customer customer){
-        return repository.save(customer);
+    public CustomerDto create(Customer customer){
+        return mapper.apply(
+            repository.save(customer)
+            );
     }
 
     public CustomerDto getCustomer(Integer id){
