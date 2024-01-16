@@ -48,10 +48,10 @@ public class CustomerController {
     }
 
     @PutMapping("customer/{id}")
-    public ResponseEntity<Customer> updateCustomer(@PathVariable Integer id, @RequestBody Customer updatedCustomer){
-        return service.updateCustomer(id, updatedCustomer)
-        .map(updateCustomer -> new ResponseEntity<>(updatedCustomer, HttpStatus.OK))
-        .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable Integer id, @RequestBody Customer updatedCustomer){
+        return ResponseEntity.ok(
+            service.updateCustomer(id, updatedCustomer)
+            );
     }
 
     @DeleteMapping("customer/{id}")

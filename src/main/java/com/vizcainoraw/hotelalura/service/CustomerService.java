@@ -45,14 +45,20 @@ public class CustomerService{
             ));
     }
 
-    public Optional<Customer> updateCustomer(Integer id, Customer updateCustomer){
-        return repository.findById(id).map(ExistingCustomer ->{
-            ExistingCustomer.setFirstName(updateCustomer.getFirstName());
-            ExistingCustomer.setLastName(updateCustomer.getLastName());
-            ExistingCustomer.setPhoneNumber(updateCustomer.getPhoneNumber());
-            ExistingCustomer.setEmail(updateCustomer.getEmail());
-            return repository.save(ExistingCustomer);
-        });
+    public CustomerDto updateCustomer(Integer id, Customer updateCustomer){
+        Customer customer = repository.findById(id)
+        .orElseThrow(()-> new ResourceNotFoundException(
+            "costumer with id [%s] not found".formatted(id)
+            ));
+
+        customer.setEmail( updateCustomer.getEmail());
+        customer.setFirstName( updateCustomer.getFirstName());
+        customer.setLastName( updateCustomer.getLastName());
+        customer.setPhoneNumber( updateCustomer.getPhoneNumber());
+
+        return mapper.apply(
+            repository.save(customer)
+            );
     }
 
     public boolean deleteCustomer(Integer id){
