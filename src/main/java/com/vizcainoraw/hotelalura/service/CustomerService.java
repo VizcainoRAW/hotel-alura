@@ -1,7 +1,6 @@
 package com.vizcainoraw.hotelalura.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.kafka.common.errors.ResourceNotFoundException;

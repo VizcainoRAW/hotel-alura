@@ -2,8 +2,11 @@ package com.vizcainoraw.hotelalura.dto.Room;
 
 import java.util.function.Function;
 
+import org.springframework.stereotype.Service;
+
 import com.vizcainoraw.hotelalura.model.Room;
 
+@Service
 public class RoomMapper implements Function<Room, RoomDto>{
 
     @Override
