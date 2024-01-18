@@ -36,8 +36,10 @@ public class RoomService {
                 ));
     }
 
-    public Room create(Room room){
-        return repository.save(room);
+    public RoomDto createRoom(Room room){
+        return mapper.apply(
+            repository.save(room)
+            );
     }
 
 }

@@ -3,12 +3,14 @@ package com.vizcainoraw.hotelalura.model;
 import java.math.BigDecimal;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "rooms")
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 public class Room {
     
@@ -25,6 +27,6 @@ public class Room {
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal Price;
 
-    @Column(nullable = true)
-    private Boolean Occupied; 
+    @Column(nullable = true, columnDefinition = "boolean default false")
+    private Boolean Occupied;
 }
