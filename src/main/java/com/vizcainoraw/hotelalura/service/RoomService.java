@@ -59,4 +59,16 @@ public class RoomService {
         return mapper.apply(repository.save(room));
     }
 
+
+    public void deleteRoom(Integer id){
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+        }else{
+            throw new ResourceNotFoundException(
+                "not found room with the id (%s) to delete".formatted(id)
+            );
+        }
+
+    } 
+
 }

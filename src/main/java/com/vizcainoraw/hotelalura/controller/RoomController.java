@@ -1,14 +1,12 @@
 package com.vizcainoraw.hotelalura.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.handler.annotation.support.MethodArgumentNotValidException;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -71,6 +69,17 @@ public class RoomController {
                 service.updateRoom(id, UpdatedRoom)
             );
         } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
+    @DeleteMapping("/room/{id}")
+    public ResponseEntity<?> deleteRoom(@PathVariable Integer id){
+        try {
+            service.deleteRoom(id);
+            return ResponseEntity.noContent().build();
+        } catch (ResourceNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
