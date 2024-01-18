@@ -22,13 +22,13 @@ public class RoomService {
         this.mapper = mapper;
     }
 
-    public List<RoomDto> getAllRooms(){
+    public List<RoomDto> findAllRooms(){
         return repository.findAll().stream()
         .map(mapper)
         .collect(Collectors.toList());
     }
 
-    public RoomDto getRoom(Integer id){
+    public RoomDto findRoomById(Integer id){
         return repository.findById(id)
             .map(mapper)
             .orElseThrow(()-> new ResourceNotFoundException(
@@ -40,6 +40,23 @@ public class RoomService {
         return mapper.apply(
             repository.save(room)
             );
+    }
+
+    public RoomDto updateRoom(Integer id, Room updateRoom){
+        // check if room exits
+        Room room = repository.findById(id).get();
+        if(room == null){
+            throw new ResourceNotFoundException(
+                "not found room with the id (%s)".formatted(id)
+            );
+        }
+
+        // update room
+        room.setRoomNumber(updateRoom.getRoomNumber());
+        room.setType(updateRoom.getType());
+        room.setPrice(updateRoom.getPrice());
+        room.setOccupied(updateRoom.getOccupied());
+        return mapper.apply(repository.save(room));
     }
 
 }

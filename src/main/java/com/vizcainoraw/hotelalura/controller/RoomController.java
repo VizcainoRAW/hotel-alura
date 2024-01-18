@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.vizcainoraw.hotelalura.dto.Room.RoomDto;
 import com.vizcainoraw.hotelalura.model.Room;
 import com.vizcainoraw.hotelalura.service.RoomService;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 
 @RestController
@@ -33,24 +35,25 @@ public class RoomController {
     }
 
     @GetMapping("/rooms")
-    public ResponseEntity<List<RoomDto>> getRooms(){
+    public ResponseEntity<List<RoomDto>> getAllRooms(){
         return ResponseEntity.ok(
-            service.getAllRooms()
+            service.findAllRooms()
             );
 
     }
 
     @GetMapping("/room/{id}")
-    public ResponseEntity<RoomDto> getRoom(@PathVariable Integer id) {
+    public ResponseEntity<RoomDto> getRoomById(@PathVariable Integer id) {
         try {
-            return ResponseEntity.ok(service.getRoom(id));
+            return ResponseEntity.ok(service.findRoomById(id));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
+
     
     @PostMapping("/room")
-    public ResponseEntity<?> addRoom(@RequestBody @Validated Room room){
+    public ResponseEntity<?> createRoom(@RequestBody @Validated Room room){
         try {
             return ResponseEntity.ok(
                 service.createRoom(room)
@@ -61,4 +64,14 @@ public class RoomController {
     }
 
 
+    @PutMapping("/room/{id}")
+    public ResponseEntity<?> updateRoom(@PathVariable Integer id, @RequestBody Room UpdatedRoom) {
+        try {
+            return ResponseEntity.ok(
+                service.updateRoom(id, UpdatedRoom)
+            );
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }
