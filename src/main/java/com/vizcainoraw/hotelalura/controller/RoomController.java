@@ -59,7 +59,7 @@ public class RoomController {
                 service.createRoom(room)
             );
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.badRequest().body(e);
         }
     }
 
@@ -71,7 +71,7 @@ public class RoomController {
                 service.updateRoom(id, UpdatedRoom)
             );
         } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
+            return ResponseEntity.notFound().build();
         }
     }
 }
