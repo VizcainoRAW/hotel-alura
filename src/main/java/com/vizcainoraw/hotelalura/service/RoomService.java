@@ -11,6 +11,8 @@ import com.vizcainoraw.hotelalura.dto.Room.RoomDto;
 import com.vizcainoraw.hotelalura.model.Room;
 import com.vizcainoraw.hotelalura.repository.RoomRepository;
 
+import lombok.NonNull;
+
 @Service
 public class RoomService {
 
@@ -28,7 +30,7 @@ public class RoomService {
         .collect(Collectors.toList());
     }
 
-    public RoomDto findRoomById(Integer id){
+    public RoomDto findRoomById(@NonNull Integer id){
         return repository.findById(id)
             .map(mapper)
             .orElseThrow(()-> new ResourceNotFoundException(
@@ -36,13 +38,13 @@ public class RoomService {
                 ));
     }
 
-    public RoomDto createRoom(Room room){
+    public RoomDto createRoom(@NonNull Room room){
         return mapper.apply(
             repository.save(room)
             );
     }
 
-    public RoomDto updateRoom(Integer id, Room updateRoom){
+    public RoomDto updateRoom(@NonNull Integer id, Room updateRoom){
         // check if room exits
         Room room = repository.findById(id).get();
         if(room == null){
@@ -60,7 +62,7 @@ public class RoomService {
     }
 
 
-    public void deleteRoom(Integer id){
+    public void deleteRoom(@NonNull Integer id){
         if (repository.existsById(id)) {
             repository.deleteById(id);
         }else{
