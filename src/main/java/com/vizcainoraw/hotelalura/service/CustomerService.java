@@ -11,62 +11,56 @@ import com.vizcainoraw.hotelalura.dto.costumer.CustomerMapper;
 import com.vizcainoraw.hotelalura.model.Customer;
 import com.vizcainoraw.hotelalura.repository.CustomerRepository;
 
+import lombok.NonNull;
+
 @Service
-public class CustomerService{
+public class CustomerService {
 
-    private final CustomerRepository repository;
-    private final CustomerMapper mapper;
+  private final CustomerRepository repository;
+  private final CustomerMapper mapper;
 
-    public CustomerService(CustomerRepository repository, CustomerMapper mapper){
-        this.repository = repository;
-        this.mapper = mapper;
+  public CustomerService(CustomerRepository repository, CustomerMapper mapper){
+      this.repository = repository;
+      this.mapper = mapper;
+  }
 
-    }
+  public List<CustomerDto> getAllCustomers() {
+      List<Customer> customers = repository.findAll();
+      return customers.stream()
+                    .map(mapper)
+                    .collect(Collectors.toList());
+  }
 
-    public List<CustomerDto> getAllCustomers() {
-        List<Customer> customers = repository.findAll();
-        return customers.stream()
-                       .map(mapper)
-                       .collect(Collectors.toList());
-    }
-    
-    public CustomerDto create(Customer customer){
-        return mapper.apply(
-            repository.save(customer)
-            );
-    }
+  public CustomerDto create(@NonNull Customer customer){
+      return mapper.apply(repository.save(customer));
+  }
 
-    public CustomerDto getCustomer(Integer id){
-        return repository.findById(id)
-        .map(mapper)
-        .orElseThrow(()-> new ResourceNotFoundException(
-            "costumer with id [%s] not found".formatted(id)
-            ));
-    }
+  public CustomerDto getCustomer(@NonNull Integer id){
+      return repository.findById(id)
+          .map(mapper)
+          .orElseThrow(() -> new ResourceNotFoundException(
+              "costumer with id [%s] not found".formatted(id)));
+  }
 
-    public CustomerDto updateCustomer(Integer id, Customer updateCustomer){
-        Customer customer = repository.findById(id)
-        .orElseThrow(()-> new ResourceNotFoundException(
-            "costumer with id [%s] not found".formatted(id)
-            ));
+  public CustomerDto updateCustomer(@NonNull Integer id, Customer updateCustomer){
+      Customer customer = repository.findById(id)
+          .orElseThrow(() -> new ResourceNotFoundException(
+              "costumer with id [%s] not found".formatted(id)));
 
-        customer.setEmail( updateCustomer.getEmail());
-        customer.setFirstName( updateCustomer.getFirstName());
-        customer.setLastName( updateCustomer.getLastName());
-        customer.setPhoneNumber( updateCustomer.getPhoneNumber());
+      customer.setEmail(updateCustomer.getEmail());
+      customer.setFirstName(updateCustomer.getFirstName());
+      customer.setLastName(updateCustomer.getLastName());
+      customer.setPhoneNumber(updateCustomer.getPhoneNumber());
 
-        return mapper.apply(
-            repository.save(customer)
-            );
-    }
+      return mapper.apply(repository.save(customer));
+  }
 
-    public boolean deleteCustomer(Integer id){
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-            return !repository.existsById(id);
-        }else{
-            return false;
-        }
-    }
-
+  public boolean deleteCustomer(@NonNull Integer id){
+      if (repository.existsById(id)) {
+          repository.deleteById(id);
+          return !repository.existsById(id);
+      }else{
+          return false;
+      }
+  }
 }
