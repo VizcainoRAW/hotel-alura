@@ -16,61 +16,53 @@ import lombok.NonNull;
 @Service
 public class RoomService {
 
-    private final RoomRepository repository;
-    private final RoomMapper mapper;
+   private final RoomRepository repository;
+   private final RoomMapper mapper;
 
-    public RoomService(RoomRepository repository, RoomMapper mapper){
-        this.repository = repository;
-        this.mapper = mapper;
-    }
+   public RoomService(RoomRepository repository, RoomMapper mapper){
+       this.repository = repository;
+       this.mapper = mapper;
+   }
 
-    public List<RoomDto> findAllRooms(){
-        return repository.findAll().stream()
-        .map(mapper)
-        .collect(Collectors.toList());
-    }
+   public List<RoomDto> findAllRooms(){
+       return repository.findAll().stream()
+           .map(mapper)
+           .collect(Collectors.toList());
+   }
 
-    public RoomDto findRoomById(@NonNull Integer id){
-        return repository.findById(id)
-            .map(mapper)
-            .orElseThrow(()-> new ResourceNotFoundException(
-                "dont found room id (%s)".formatted(id)
-                ));
-    }
+   public RoomDto findRoomById(@NonNull Integer id){
+       return repository.findById(id)
+           .map(mapper)
+           .orElseThrow(() -> new ResourceNotFoundException(
+               "dont found room id (%s)".formatted(id)));
+   }
 
-    public RoomDto createRoom(@NonNull Room room){
-        return mapper.apply(
-            repository.save(room)
-            );
-    }
+   public RoomDto createRoom(@NonNull Room room){
+       return mapper.apply(repository.save(room));
+   }
 
-    public RoomDto updateRoom(@NonNull Integer id, Room updateRoom){
-        // check if room exits
-        Room room = repository.findById(id).get();
-        if(room == null){
-            throw new ResourceNotFoundException(
-                "not found room with the id (%s)".formatted(id)
-            );
-        }
+   public RoomDto updateRoom(@NonNull Integer id, Room updateRoom){
+       // check if room exists
+       Room room = repository.findById(id).get();
+       if(room == null){
+           throw new ResourceNotFoundException(
+               "not found room with the id (%s)".formatted(id));
+       }
 
-        // update room
-        room.setRoomNumber(updateRoom.getRoomNumber());
-        room.setType(updateRoom.getType());
-        room.setPrice(updateRoom.getPrice());
-        room.setOccupied(updateRoom.getOccupied());
-        return mapper.apply(repository.save(room));
-    }
+       // update room
+       room.setRoomNumber(updateRoom.getRoomNumber());
+       room.setType(updateRoom.getType());
+       room.setPrice(updateRoom.getPrice());
+       room.setOccupied(updateRoom.getOccupied());
+       return mapper.apply(repository.save(room));
+   }
 
-
-    public void deleteRoom(@NonNull Integer id){
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-        }else{
-            throw new ResourceNotFoundException(
-                "not found room with the id (%s) to delete".formatted(id)
-            );
-        }
-
-    } 
-
+   public void deleteRoom(@NonNull Integer id){
+       if (repository.existsById(id)) {
+           repository.deleteById(id);
+       }else{
+           throw new ResourceNotFoundException(
+               "not found room with the id (%s) to delete".formatted(id));
+       }
+   } 
 }
