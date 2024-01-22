@@ -13,13 +13,13 @@ import lombok.NoArgsConstructor;
 public class Service {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ServiceId;
 
     @Column(nullable = false)
     private String Name;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal price; 
+    private BigDecimal Cost; 
     
 }
