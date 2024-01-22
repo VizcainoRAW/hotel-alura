@@ -20,6 +20,6 @@ public class Service {
     private String Name;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private BigDecimal price; 
+    private BigDecimal cost; 
     
 }
