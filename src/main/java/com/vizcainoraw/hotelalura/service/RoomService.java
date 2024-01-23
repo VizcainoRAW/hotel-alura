@@ -30,7 +30,7 @@ public class RoomService {
            .collect(Collectors.toList());
    }
 
-   public RoomDto findRoomById(@NonNull Integer id){
+   public RoomDto findRoomById(@NonNull Long id){
        return repository.findById(id)
            .map(mapper)
            .orElseThrow(() -> new ResourceNotFoundException(
@@ -41,7 +41,7 @@ public class RoomService {
        return mapper.apply(repository.save(room));
    }
 
-   public RoomDto updateRoom(@NonNull Integer id, Room updateRoom){
+   public RoomDto updateRoom(@NonNull Long id, Room updateRoom){
        // check if room exists
        Room room = repository.findById(id).get();
        if(room == null){
@@ -57,7 +57,7 @@ public class RoomService {
        return mapper.apply(repository.save(room));
    }
 
-   public void deleteRoom(@NonNull Integer id){
+   public void deleteRoom(@NonNull Long id){
        if (repository.existsById(id)) {
            repository.deleteById(id);
        }else{

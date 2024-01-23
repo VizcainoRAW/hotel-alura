@@ -41,7 +41,7 @@ public class RoomController {
     }
 
     @GetMapping("/room/{id}")
-    public ResponseEntity<RoomDto> getRoomById(@PathVariable Integer id) {
+    public ResponseEntity<RoomDto> getRoomById(@PathVariable Long id) {
         try {
             return ResponseEntity.ok(service.findRoomById(id));
         } catch (ResourceNotFoundException e) {
@@ -63,7 +63,7 @@ public class RoomController {
 
 
     @PutMapping("/room/{id}")
-    public ResponseEntity<?> updateRoom(@PathVariable Integer id, @RequestBody Room UpdatedRoom) {
+    public ResponseEntity<?> updateRoom(@PathVariable Long id, @RequestBody Room UpdatedRoom) {
         try {
             return ResponseEntity.ok(
                 service.updateRoom(id, UpdatedRoom)
@@ -75,7 +75,7 @@ public class RoomController {
 
 
     @DeleteMapping("/room/{id}")
-    public ResponseEntity<?> deleteRoom(@PathVariable Integer id){
+    public ResponseEntity<?> deleteRoom(@PathVariable Long id){
         try {
             service.deleteRoom(id);
             return ResponseEntity.noContent().build();

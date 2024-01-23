@@ -32,7 +32,7 @@ public class ServiceController {
     }
 
     @GetMapping("/service/{id}")
-    public ResponseEntity<ServiceDto> getServiceById(@PathVariable Integer id) {
+    public ResponseEntity<ServiceDto> getServiceById(@PathVariable Long id) {
         return ResponseEntity.ok(service.findServiceById(id));
     }
 
@@ -49,14 +49,14 @@ public class ServiceController {
     }
 
     @PutMapping("/service/{id}")
-    public ResponseEntity<ServiceDto> putService(@PathVariable Integer id, @RequestBody ServiceDto updatedServiceDto) {
+    public ResponseEntity<ServiceDto> putService(@PathVariable Long id, @RequestBody ServiceDto updatedServiceDto) {
         return ResponseEntity.ok(
             service.updateService(id, updatedServiceDto)
         );
     }
 
     @DeleteMapping("/service/{id}")
-    public ResponseEntity<?> deleteService(@PathVariable Integer id){
+    public ResponseEntity<?> deleteService(@PathVariable Long id){
         service.deleteService(id);
         return ResponseEntity.noContent().build();
     }

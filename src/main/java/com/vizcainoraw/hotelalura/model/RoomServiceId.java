@@ -15,9 +15,9 @@ import lombok.NoArgsConstructor;
 public class RoomServiceId implements Serializable {
 
     @Column(name = "room_id")
-    private Integer roomId;
+    private Long roomId;
 
     @Column(name = "service_id")
-    private Integer serviceId;
+    private Long serviceId;
 
 }

@@ -29,7 +29,7 @@ public class ServiceService {
         .collect(Collectors.toList());
     }
 
-    public ServiceDto findServiceById(@NonNull Integer id){
+    public ServiceDto findServiceById(@NonNull Long id){
         return repository.findById(id)
         .map(service -> mapper.serviceToDto(service))
         .orElseThrow(() -> new ResourceNotFoundException(
@@ -48,7 +48,7 @@ public class ServiceService {
             );
     }
 
-    public ServiceDto updateService(@NonNull Integer id, ServiceDto updatedServiceDto){
+    public ServiceDto updateService(@NonNull Long id, ServiceDto updatedServiceDto){
         // check if service to update exits
         Service service = repository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(
@@ -64,7 +64,7 @@ public class ServiceService {
             );
     }
 
-    public void deleteService(@NonNull Integer id) {
+    public void deleteService(@NonNull Long id) {
         if (!repository.existsById(id)) {
             throw new ResourceNotFoundException(
                 String.format("No found service id (%d) to delete", id));

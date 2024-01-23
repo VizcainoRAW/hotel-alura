@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.vizcainoraw.hotelalura.model.Room;
 
 @Repository
-public interface RoomRepository extends JpaRepository<Room, Integer>{
+public interface RoomRepository extends JpaRepository<Room, Long>{
     
 }

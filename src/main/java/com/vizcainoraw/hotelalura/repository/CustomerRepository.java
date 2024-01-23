@@ -6,6 +6,6 @@ import com.vizcainoraw.hotelalura.model.Customer;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<Customer, Integer>{
+public interface CustomerRepository extends JpaRepository<Customer, Long>{
     Customer getCustomerByEmail(String mail);
 }

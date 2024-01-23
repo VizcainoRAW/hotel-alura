@@ -32,7 +32,7 @@ public class CustomerController {
     public Iterable<CustomerDto> getCustmers() { return service.getAllCustomers(); } 
 
     @GetMapping("customer/{id}")
-    public ResponseEntity<CustomerDto> getCustmer(@PathVariable Integer id){
+    public ResponseEntity<CustomerDto> getCustmer(@PathVariable Long id){
         try {
             return new ResponseEntity<>(service.getCustomer(id), HttpStatus.OK);
         } catch (Exception e) {
@@ -48,14 +48,14 @@ public class CustomerController {
     }
 
     @PutMapping("customer/{id}")
-    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable Integer id, @RequestBody Customer updatedCustomer){
+    public ResponseEntity<CustomerDto> updateCustomer(@PathVariable Long id, @RequestBody Customer updatedCustomer){
         return ResponseEntity.ok(
             service.updateCustomer(id, updatedCustomer)
             );
     }
 
     @DeleteMapping("customer/{id}")
-    public ResponseEntity<Customer> deleteCustomer(@PathVariable Integer id){
+    public ResponseEntity<Customer> deleteCustomer(@PathVariable Long id){
         if(!service.deleteCustomer(id)){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

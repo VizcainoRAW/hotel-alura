@@ -35,14 +35,14 @@ public class CustomerService {
       return mapper.apply(repository.save(customer));
   }
 
-  public CustomerDto getCustomer(@NonNull Integer id){
+  public CustomerDto getCustomer(@NonNull Long id){
       return repository.findById(id)
           .map(mapper)
           .orElseThrow(() -> new ResourceNotFoundException(
               "costumer with id [%s] not found".formatted(id)));
   }
 
-  public CustomerDto updateCustomer(@NonNull Integer id, Customer updateCustomer){
+  public CustomerDto updateCustomer(@NonNull Long id, Customer updateCustomer){
       Customer customer = repository.findById(id)
           .orElseThrow(() -> new ResourceNotFoundException(
               "costumer with id [%s] not found".formatted(id)));
@@ -55,7 +55,7 @@ public class CustomerService {
       return mapper.apply(repository.save(customer));
   }
 
-  public boolean deleteCustomer(@NonNull Integer id){
+  public boolean deleteCustomer(@NonNull Long id){
       if (repository.existsById(id)) {
           repository.deleteById(id);
           return !repository.existsById(id);
