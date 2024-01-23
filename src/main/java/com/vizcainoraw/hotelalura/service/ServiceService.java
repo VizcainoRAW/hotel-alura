@@ -25,25 +25,30 @@ public class ServiceService {
 
     public List<ServiceDto> findAllServices(){
         return repository.findAll().stream()
-        .map(mapper)
+        .map(service -> mapper.serviceToDto(service))
         .collect(Collectors.toList());
     }
 
     public ServiceDto findServiceById(@NonNull Integer id){
         return repository.findById(id)
-        .map(mapper)
+        .map(service -> mapper.serviceToDto(service))
         .orElseThrow(() -> new ResourceNotFoundException(
             "no found service with id (%s)".formatted(id
             )));
     }
 
-    public ServiceDto createService(@NonNull Service service){
-        return mapper.apply(
+    public ServiceDto createService(@NonNull ServiceDto serviceDto){
+        Service service = mapper.ServiceDtoToEntity(serviceDto);
+        if (service == null) {
+            throw new IllegalArgumentException("Cannot convert ServiceDto to Service");
+        }
+
+        return mapper.serviceToDto(
             repository.save(service)
             );
     }
 
-    public ServiceDto updateService(@NonNull Integer id, Service updatedService){
+    public ServiceDto updateService(@NonNull Integer id, ServiceDto updatedServiceDto){
         // check if service to update exits
         Service service = repository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException(
@@ -51,11 +56,10 @@ public class ServiceService {
                 ));
 
         // update and save
-        service.setServiceId(updatedService.getServiceId());
-        service.setName(updatedService.getName());
-        service.setPrice(updatedService.getPrice());
+        service.setName(updatedServiceDto.name());
+        service.setCost(updatedServiceDto.cost());
 
-        return mapper.apply(
+        return mapper.serviceToDto(
             repository.save(service)
             );
     }

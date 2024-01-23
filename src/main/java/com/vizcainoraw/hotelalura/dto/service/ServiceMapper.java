@@ -1,17 +1,19 @@
 package com.vizcainoraw.hotelalura.dto.service;
 
-import java.util.function.Function;
+import org.mapstruct.InheritInverseConfiguration;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingConstants;
 
 import com.vizcainoraw.hotelalura.model.Service;
 
-public class ServiceMapper implements Function<Service, ServiceDto>{
+@Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
+public interface ServiceMapper{
      
-    @Override
-    public ServiceDto apply(Service service) {
-        return new ServiceDto(
-            service.getServiceId(),
-            service.getName(),
-            service.getPrice()
-        );
-    }
+    @Mapping(source = "serviceId", target = "id" )
+    ServiceDto serviceToDto(Service service);
+
+    @InheritInverseConfiguration
+    Service ServiceDtoToEntity(ServiceDto serviceDto);
+
 }
