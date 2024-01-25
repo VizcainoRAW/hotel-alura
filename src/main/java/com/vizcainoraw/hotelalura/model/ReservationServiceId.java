@@ -12,12 +12,12 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @Data
 @NoArgsConstructor
-public class RoomServiceId implements Serializable {
+public class ReservationServiceId implements Serializable {
 
     @Column(name = "room_id")
     private Long roomId;
 
     @Column(name = "service_id")
-    private Long serviceId;
+    private Long reservationId;
 
 }

@@ -14,13 +14,16 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long EmployeeId;
+    private Long employeeId;
 
     @Column(nullable = false)
     private String firstName;
 
     @Column(nullable = false)
     private String lastName;
+
+    @Column(nullable = false)
+    private String position;
 
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal salary;

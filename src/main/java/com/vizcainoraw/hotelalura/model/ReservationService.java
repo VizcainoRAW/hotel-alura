@@ -7,11 +7,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "room_service")
+@Table(name = "reservation_services")
 @Data
 @NoArgsConstructor
-public class RoomService {
+public class ReservationService {
     
     @EmbeddedId
-    private RoomServiceId id;
+    private ReservationServiceId id;
 }
